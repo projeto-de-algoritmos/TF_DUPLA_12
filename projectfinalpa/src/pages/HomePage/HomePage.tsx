@@ -1,14 +1,34 @@
-import React, { BaseSyntheticEvent, useState } from "react";
+import React, { BaseSyntheticEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Box, Text, Button, Grid, Image, Spinner } from "@chakra-ui/react";
 import axios from "axios";
+import createTeam from "../../processos/createTeam";
+import TeamProps from "../../interface/Team";
+import Graph from "../../processos/Graph";
 
 const HomePage: React.FC = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [dataTeam, setDataTeam] = useState<TeamProps[]>([]);
+
+  useEffect(() => {
+    const data = createTeam();
+    setDataTeam(data);
+  }, []);
 
   const setTeam = async (e: BaseSyntheticEvent, mode: string) => {
-    console.log(e, mode);
+    e.preventDefault();
+    setIsLoading(true);
+
+    const graph = new Graph();
+
+    dataTeam.forEach((_, index) => graph.addNode(index));
+
+    dataTeam.forEach((person, index) => {
+      person.wons.forEach((battle) => {
+        graph.addEdge(index, battle);
+      });
+    });
   };
 
   return (
