@@ -1,13 +1,15 @@
 import React, { BaseSyntheticEvent, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useNavigation } from "react-router-dom";
 import { Box, Text, Button, Grid, Image, Spinner } from "@chakra-ui/react";
 import axios from "axios";
 import createTeam from "../../processos/createTeam";
 import TeamProps from "../../interface/Team";
 import Graph from "../../processos/Graph";
+import knapsack from "../../processos/Knapsack";
 
 const HomePage: React.FC = () => {
   const navigate = useNavigate();
+  const navigation = useNavigation();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [dataTeam, setDataTeam] = useState<TeamProps[]>([]);
 
@@ -29,6 +31,52 @@ const HomePage: React.FC = () => {
         graph.addEdge(index, battle);
       });
     });
+
+    const bestTeam: Array<TeamProps> = [];
+
+    const random = Math.floor(Math.random() * 99);
+
+    graph.BFS(random, (currentValue: number) => {
+      if (dataTeam[currentValue].power > 7) {
+        bestTeam.push(dataTeam[currentValue]);
+        return false;
+      } else {
+        return false;
+      }
+    });
+
+    setDataTeam(bestTeam);
+
+    const teamDataPoke: Array<any> = await Promise.all(
+      bestTeam.map(async (dataPoke) => {
+        const pokemonData: Array<any> = await Promise.all(
+          dataPoke.pokemons.map(async (pokemon) => {
+            try {
+              const response = await axios.get(
+                `https://pokeapi.co/api/v2/pokemon/${pokemon}`
+              );
+              return response.data;
+            } catch (error) {
+              console.error(error);
+            }
+          })
+        );
+        dataPoke.pokemons = pokemonData;
+        return dataPoke;
+      })
+    );
+    let theBestOne: any = {};
+    let theBestValue: number = 0;
+    teamDataPoke.forEach((dataPoke) => {
+      const knapsackValue = knapsack(dataPoke.pokemons, 500, mode);
+      if (theBestValue < knapsackValue.maxValue) {
+        theBestValue = knapsackValue.maxValue;
+        theBestOne = dataPoke;
+      }
+    });
+    setIsLoading(false);
+
+    navigate("/temeGerado", { state: theBestOne });
   };
 
   return (

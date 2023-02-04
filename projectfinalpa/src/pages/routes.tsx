@@ -1,12 +1,18 @@
-import { Route, Routes } from "react-router-dom";
+import { createBrowserRouter, Route, Routes } from "react-router-dom";
 import HomePage from "./HomePage/HomePage";
 import Team from "./Team/Team";
 
-export const RoutesPages = () => {
-  return (
-    <Routes>
-      <Route path="/"  element={<HomePage />} />
-      <Route path="/temeGerado"  element={<Team />} />
-    </Routes>
-  );
-};
+export const RoutesPages = createBrowserRouter([
+  {
+    children: [
+      {
+        path: "/",
+        element: <HomePage />,
+      },
+      {
+        path: "temeGerado",
+        element: <Team />,
+      },
+    ],
+  },
+]);
