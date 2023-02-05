@@ -16,12 +16,14 @@
     "axios": "^0.21.1",
     "faker": "^5.5.3",
     "framer-motion": "^6.5.1",
+    "ms-react-progress-bar": "^1.1.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^3.11.0",
     "react-router": "6",
     "react-router-dom": "6",
     "react-scripts": "5.0.1",
+    "styled-components": "^5.3.6",
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4"
   },
@@ -45,5 +47,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/styled-components": "^5.1.26"
   }
 }

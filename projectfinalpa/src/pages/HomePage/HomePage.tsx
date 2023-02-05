@@ -6,6 +6,7 @@ import createTeam from "../../processos/createTeam";
 import TeamProps from "../../interface/Team";
 import Graph from "../../processos/Graph";
 import knapsack from "../../processos/Knapsack";
+import Logo from "../../assets/logoPokemon.png";
 
 const HomePage: React.FC = () => {
   const navigate = useNavigate();
@@ -81,6 +82,31 @@ const HomePage: React.FC = () => {
 
   return (
     <>
+      <Box position="fixed" right="0" left="0" top="10%" alignItems="center">
+        <Text
+          fontWeight="extrabold"
+          fontSize="2rem"
+          textAlign="center"
+          display="flex"
+          alignItems="center"
+          alignContent="center"
+          justifyContent="center"
+        >
+          {" "}
+          Gerador de equipe <Image marginLeft="1rem" src={Logo} />
+        </Text>
+        <Text
+          fontWeight="extrabold"
+          fontSize="2rem"
+          display="flex"
+          alignItems="center"
+          alignContent="center"
+          justifyContent="center"
+        >
+          {" "}
+          Selecione o atribito foco para que assim seja gerado uma equipe.
+        </Text>
+      </Box>
       <Box
         w="100%"
         h="100vh"
@@ -92,55 +118,62 @@ const HomePage: React.FC = () => {
         pos="fixed"
         top="0"
       >
-        <Grid
-          width="600px"
-          templateColumns="repeat(3, 1fr)"
-          templateRows="repeat(3, 1fr)"
-          gap="1rem"
+        <Box
+          backgroundColor="white"
+          borderRadius="1rem"
+          padding="4rem"
+          paddingLeft="6rem"
         >
-          <Button
-            bg="#48D0B0"
-            _hover={{ background: "#62da6e" }}
-            onClick={(e) => setTeam(e, "hp")}
+          <Grid
+            width="600px"
+            templateColumns="repeat(3, 1fr)"
+            templateRows="repeat(2, 1fr)"
+            gap="1rem"
           >
-            Health Power
-          </Button>
-          <Button
-            bg="#FB6C6C"
-            _hover={{ background: "#cf5f5f" }}
-            onClick={(e) => setTeam(e, "attack")}
-          >
-            Attack
-          </Button>
-          <Button
-            bg="#6fd7f7"
-            _hover={{ background: "#5cb4cf" }}
-            onClick={(e) => setTeam(e, "defense")}
-          >
-            Defense
-          </Button>
-          <Button
-            bg="#f7ba6f"
-            _hover={{ background: "#ce9c5e" }}
-            onClick={(e) => setTeam(e, "special-attack")}
-          >
-            Special Attack
-          </Button>
-          <Button
-            bg="#9E4399"
-            _hover={{ background: "#a45fd1" }}
-            onClick={(e) => setTeam(e, "special-defense")}
-          >
-            Special Defense
-          </Button>
-          <Button
-            bg="#FFCE4B"
-            _hover={{ background: "#c5ca5a" }}
-            onClick={(e) => setTeam(e, "speed")}
-          >
-            Speed
-          </Button>
-        </Grid>
+            <Button
+              bg="#48D0B0"
+              _hover={{ background: "#62da6e" }}
+              onClick={(e) => setTeam(e, "hp")}
+            >
+              Saúde
+            </Button>
+            <Button
+              bg="#FB6C6C"
+              _hover={{ background: "#cf5f5f" }}
+              onClick={(e) => setTeam(e, "attack")}
+            >
+              Ataque
+            </Button>
+            <Button
+              bg="#6fd7f7"
+              _hover={{ background: "#5cb4cf" }}
+              onClick={(e) => setTeam(e, "defense")}
+            >
+              Defesa
+            </Button>
+            <Button
+              bg="#f7ba6f"
+              _hover={{ background: "#ce9c5e" }}
+              onClick={(e) => setTeam(e, "special-attack")}
+            >
+              Ataque Especial
+            </Button>
+            <Button
+              bg="#9E4399"
+              _hover={{ background: "#a45fd1" }}
+              onClick={(e) => setTeam(e, "special-defense")}
+            >
+              Defesa Especial
+            </Button>
+            <Button
+              bg="#FFCE4B"
+              _hover={{ background: "#D6AE3E" }}
+              onClick={(e) => setTeam(e, "speed")}
+            >
+              Velocidade
+            </Button>
+          </Grid>
+        </Box>
       </Box>
     </>
   );
